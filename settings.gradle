@@ -1,0 +1,9 @@
+rootProject.name = 'SpringCloudMicroservices'
+include 'AccountService'
+include 'BillService'
+include 'DepositService'
+include 'ConfigService'
+include 'Gateway'
+include 'NotificationService'
+include 'RegistryService'
+
