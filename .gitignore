@@ -19,6 +19,7 @@ Gateway/.gradle
 
 NotificationService/build
 NotificationService/.gradle
+mail-props.properties
 
 RegistryService/build
 RegistryService/.gradle

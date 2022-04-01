@@ -25,7 +25,7 @@ public class AccountService {
     }
 
     public Long createAccount(String name, String email, String phone, List<Long> bills) {
-        Account account = new Account(name, email, phone, OffsetDateTime.now(), bills);
+        Account account = new Account(name, phone, email, OffsetDateTime.now(), bills);
         return repository.save(account).getAccountId();
     }
 
