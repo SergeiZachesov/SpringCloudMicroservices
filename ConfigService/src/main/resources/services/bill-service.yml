@@ -8,7 +8,7 @@ spring:
     properties:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/bill_service_database
+    url: jdbc:postgresql://192.168.1.122:5432/bill_service_database
     username: user
     password: password
     driver-class-name: org.postgresql.Driver
