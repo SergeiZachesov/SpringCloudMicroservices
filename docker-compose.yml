@@ -35,7 +35,6 @@ services:
       - config-service
       - registry
 
-
   bill-service:
     restart: on-failure
     container_name: bill-service
