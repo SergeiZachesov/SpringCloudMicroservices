@@ -34,7 +34,7 @@ public class DepositService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public DepositResponseDto deposit(Long accountId, Long billId, BigDecimal amount) throws JsonProcessingException {
+    public DepositResponseDto deposit(Long accountId, Long billId, BigDecimal amount) {
         if (accountId == null && billId == null) {
             throw new DepositServiceException("Account is null and bill is null");
         }
@@ -59,14 +59,18 @@ public class DepositService {
         return createResponse(billId, amount, accountResponseDto);
     }
 
-    private DepositResponseDto createResponse(Long billId, BigDecimal amount, AccountResponseDto accountResponseDto) throws JsonProcessingException {
+    private DepositResponseDto createResponse(Long billId, BigDecimal amount, AccountResponseDto accountResponseDto)  {
         repository.save(new Deposit(amount, billId, OffsetDateTime.now(), accountResponseDto.getEmail()));
 
         DepositResponseDto depositResponseDto = new DepositResponseDto(amount, accountResponseDto.getEmail());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        rabbitTemplate.convertAndSend(TOPIC_EXCHANGE_DEPOSIT, ROUTING_KEY_DEPOSIT,
-                objectMapper.writeValueAsString(depositResponseDto));
+        try {
+            rabbitTemplate.convertAndSend(TOPIC_EXCHANGE_DEPOSIT, ROUTING_KEY_DEPOSIT,
+                    objectMapper.writeValueAsString(depositResponseDto));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         return depositResponseDto;
     }
